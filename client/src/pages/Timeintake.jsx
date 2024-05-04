@@ -46,9 +46,9 @@ function Timeintake({timeinfo, setTimeinfo}) {
   }
 
   return (
-    <div>
+    <div className='container'>
       <form onSubmit={handleClick}>
-        <h1>INPUT</h1>
+        <h1>Time Information</h1>
         <input
           type="text"
           placeholder="Start Time"
@@ -79,7 +79,7 @@ function Timeintake({timeinfo, setTimeinfo}) {
           onChange={handleChange}
           name="num_days"
         />
-        <button type="submit">Submit</button>
+        <button className='btn' type="submit">Submit</button>
       </form>
     </div>
   )

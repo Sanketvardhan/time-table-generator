@@ -1,0 +1,38 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 15px 30px;
+  padding: 80px;
+}
+
+.container {
+  background: rgba(217, 192, 217, 0.32);
+  padding-bottom: 6px;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-radius: 1pc;
+}
+
+input[type='text'],
+input[type='number'] {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 15px;
+  border: 1px solid #b5b5b5;
+  border-radius: 15px;
+}
+
+.btn {
+  width: 10%;
+  padding: 5px;
+  background: rgba(243, 115, 60, 0.749);
+  border-radius: 15px;
+}
+
+.refresh-icon {
+  background: rgba(153, 61, 0, 0.281);
+  padding: 10px;
+  border-radius: 16px;
+}

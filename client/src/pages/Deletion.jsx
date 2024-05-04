@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+// import './Sty.css'
 import axios from 'axios'
 
 function Delete() {
@@ -19,7 +20,7 @@ function Delete() {
     }
   }
   return (
-    <div>
+    <div className='container'>
       <form on onSubmit={handelClick}>
         <h1>Deletion</h1>
         <input
@@ -29,7 +30,7 @@ function Delete() {
           name="subject_id"
           required
           />
-        <button>Delete</button>
+        <button className='btn'>Delete</button>
       </form>
     </div>
   )

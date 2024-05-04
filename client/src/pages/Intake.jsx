@@ -24,9 +24,9 @@ function Intake() {
     }
   }
   return (
-    <div>
+    <div className='container'>
       <form on onSubmit={handelClick}>
-        <h1>INPUT</h1>
+        <h1>Information</h1>
         <input
           type="number"
           placeholder="Subject ID"
@@ -69,7 +69,7 @@ function Intake() {
           name="last_name"
           required
         />
-        <button>Submit</button>
+        <button className='btn'>Submit</button>
       </form>
     </div>
   )

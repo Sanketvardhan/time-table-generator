@@ -1,17 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import Info from '../pages/Info';
-import Intake from '../pages/Intake';
+import React, { useState, useEffect } from 'react'
+import Info from '../pages/Info'
+import Intake from '../pages/Intake'
 import Deletion from '../pages/Deletion'
-import Timeintake from '../pages/Timeintake';
-import { Grid } from 'gridjs-react';
-import "./Home.css"
-
-
+import Timeintake from '../pages/Timeintake'
+import { Grid } from 'gridjs-react'
+import './Home.css'
 
 function Home() {
-  const [pythonResult, setPythonResult] = useState(null);
-  const [pyodide, setPyodide] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [pythonResult, setPythonResult] = useState(null)
+  const [pyodide, setPyodide] = useState(null)
+  const [loading, setLoading] = useState(true)
   const [timeinfo, setTimeinfo] = useState({
     start_time: '',
     lunch_start: '',
@@ -20,12 +18,12 @@ function Home() {
     num_days: '',
     name_of_subject: [],
     number_of_lectures_per_week: [],
-    probability: null
+    probability: null,
   })
 
   const handleTimeinfoChange = (updatedTimeinfo) => {
-    setTimeinfo(updatedTimeinfo);
-  };
+    setTimeinfo(updatedTimeinfo)
+  }
 
   useEffect(() => {
     // Load Pyodide when the component mounts
@@ -33,20 +31,20 @@ function Home() {
       if (!window.languagePluginLoader || !window.pyodide) {
         const pyodide = await window.loadPyodide({
           indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.18.1/full/',
-        });
-        setPyodide(pyodide);
+        })
+        setPyodide(pyodide)
       } else {
-        setPyodide(window.pyodide);
+        setPyodide(window.pyodide)
       }
-      setLoading(false);
+      setLoading(false)
     }
-    loadPyodide();
-  }, []);
+    loadPyodide()
+  }, [])
 
   const handleClick = async () => {
     if (!pyodide || loading) {
-      console.error('Pyodide is not yet loaded');
-      return;
+      console.log('Pyodide is not yet loaded')
+      return
     }
 
     const pythonScript = `
@@ -228,62 +226,78 @@ function Home() {
         timetable = generate_timetable(start_time, lunch_start, lunch_end, end_time, subjects, num_lectures, num_days,l)
         return export_json(timetable)
     main()
-    `;
-    var result = await pyodide.runPythonAsync(pythonScript);
+    `
+    var result = await pyodide.runPythonAsync(pythonScript)
     result = JSON.parse(result)
-    setPythonResult(result);
-  };
+    setPythonResult(result)
+  }
 
   const handleProbChange = (e) => {
-    const prob = e.target.value;
-    setTimeinfo(prevState => ({
+    const prob = e.target.value
+    setTimeinfo((prevState) => ({
       ...prevState,
-      probability: prob
-    }));
-  };
+      probability: prob,
+    }))
+  }
 
-  const columnNames = ['TIME','Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday','Saturday'];
+  const columnNames = [
+    'TIME',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+  ]
   return (
     <div className="Home">
-        {/* Page Starting from here */}
-        <Intake/>
-        <Info/>
-        <Deletion/>
-        <Timeintake setTimeinfo={handleTimeinfoChange} timeinfo={timeinfo}/>
-
-        {/* <label htmlFor="prob">Probability:</label>
-          <select id="prob" name="prob" value={`${selectedProb}`} onChange={handleProbChange}>
-            <option value="">Select Prob</option>
-            { for (let x=1; x <= timeinfo.name_of_subject.length; x++){
-                  <option key={slot} value={`${slot}`}>{`${slot}`}</option>}
-                }
-          </select> */}
-          {console.log(timeinfo.name_of_subject)}
-          { timeinfo.name_of_subject.length != 0 ? 
-            <div>
-          <label htmlFor="prob">Probability:</label>
-            <select id="prob" name="prob" value={timeinfo.probability} onChange={handleProbChange}>
-            <option value="">Select Prob</option>
-            {timeinfo.name_of_subject.map((subject, index) => (
-                <option key={index} value={index}>{index}</option>
-            ))}
+      {/* Page Starting from here */}
+      <h1 className='Heading'>Time-Table Generator</h1>
+      <Intake />
+      <Info />
+      <Deletion />
+      <Timeintake setTimeinfo={handleTimeinfoChange} timeinfo={timeinfo} />
+      <div className="end">
+        {/* {console.log(timeinfo.name_of_subject)} */}
+        {timeinfo.name_of_subject.length !== 0 ? (
+          <div className="prob">
+            <label htmlFor="prob">Probability:</label>
+            <select
+              id="prob"
+              name="prob"
+              className="btn"
+              value={timeinfo.probability}
+              onChange={handleProbChange}
+            >
+              <option value="">Select Probability</option>
+              {timeinfo.name_of_subject.map((subject, index) => (
+                <option key={index} value={index}>
+                  {index+1}
+                </option>
+              ))}
             </select>
-            </div> : null}
+          </div>
+        ) : null}
 
-      <button onClick={handleClick} disabled={loading}>Generate Timetable</button>
-      
+        <button className="btn" onClick={handleClick} disabled={loading}>
+          Generate Timetable
+        </button>
+      </div>
+
       {pythonResult && (
         <div className="InfoTable">
-          <Grid 
-            data={Object.keys(pythonResult).slice(1).map((key) => {
-                return pythonResult[key];
-            })}
+          <Grid
+            data={Object.keys(pythonResult)
+              .slice(1)
+              .map((key) => {
+                return pythonResult[key]
+              })}
             columns={columnNames}
-            />
+          />
         </div>
       )}
     </div>
-  );
+  )
 }
 
-export default Home;
+export default Home

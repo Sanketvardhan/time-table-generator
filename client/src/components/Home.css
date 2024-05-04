@@ -1,4 +1,18 @@
-.InfoTable {
-    height: 100vh;
-    background-color: aqua;
+body {
+    background: rgb(255,168,168);
+    background: linear-gradient(151deg, rgba(255,168,168,1) 0%, rgba(201,201,229,1) 46%, rgba(123,255,220,1) 93%);
+}
+
+.Heading {
+    font-size: 5rem;
+}
+
+.Home{
+    /* background: rgba(87, 36, 132, 0.626); */
+    padding: 60px;
+    border-radius: 1pc;
+}
+
+.prob {
+    margin: 20px 0 20px 0;
 }
